@@ -61,7 +61,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 * @since	1.3.0
 		 * @var		string
 		 */
-		private $version = '3.0.0';
+		private $version = '3.0.1';
 
 		/**
 		 * Plugin identifier.
@@ -198,7 +198,6 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			'tools' => array(
 				'ajax' => false,
 				'css' => true,
-				'stylesheet' => true,
 				'link' => array(
 					'target' => '_self'
 				),
@@ -288,7 +287,9 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			add_action( 'admin_init', array( $this, 'thickbox_setup' ) );
 
 			// Register site styles and scripts
-			add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_styles' ) );
+			if ( $this->user_settings['tools']['css'] )
+				add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_styles' ) );
+			
 			add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_scripts' ) );
 
 			// Add plugin settings link
@@ -2902,7 +2903,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 */
 		private function __debug($v) {
 
-			if ( !WP_DEBUG )
+			if ( !defined('WPP_DEBUG') || !WPP_DEBUG )
 				return;
 
 			foreach (func_get_args() as $arg) {
@@ -2936,7 +2937,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 function wpp_get_views($id = NULL, $range = NULL, $number_format = true) {
 
 	// have we got an id?
-	if ( empty($id) || is_null($id) || !$this->__is_numeric($id) ) {
+	if ( empty($id) || is_null($id) || is_numeric($id) ) {
 		return "-1";
 	} else {
 		global $wpdb;

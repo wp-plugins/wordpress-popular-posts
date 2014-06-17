@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=hcabr
 Tags: popular, posts, widget, popularity, top
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,7 +112,7 @@ Copy your modified wpp.css file to your theme's folder, otherwise my plugin will
 Since this plugin does not include any predefined designs, it's up to you to style your most popular posts list as you like (you might need to hire someone for this if you don't know HTML/CSS, though). However, I've gathered a few [examples](https://github.com/cabrerahector/wordpress-popular-posts/wiki/6.-Styling-the-list) that should get you started.
 
 = I want to remove WPP's stylesheet. How can I do that? =
-Simply add the following code to your theme's functions.php file: `<?php wp_dequeue_style('wordpress-popular-posts') ?>` (or disable the stylesheet via *wp-admin > Settings > Wordpress Popular Posts > Tools*).
+You can disable the stylesheet via *wp-admin > Settings > Wordpress Popular Posts > Tools*.
 
 = -OTHER STUFF THAT YOU (PROBABLY) WANT TO KNOW- =
 
@@ -142,6 +142,11 @@ For the time being, the [Support Forum](http://wordpress.org/support/plugin/word
 4. Wordpress Popular Posts Stats panel.
 
 == Changelog ==
+= 3.0.1 =
+* Fixes bug on wpp_get_views.
+* Sustitutes WP_DEBUG with custom debugging constant.
+* Fixes bug that prevented disabling plugin's stylesheet.
+
 = 3.0.0 =
 * Plugin refactoring based on [@tikaszvince](https://github.com/tikaszvince)'s work (many thanks, Vince!).
 * Added WPML support.
