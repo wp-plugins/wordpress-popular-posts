@@ -3,7 +3,7 @@
 Plugin Name: Wordpress Popular Posts
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-popular-posts
 Description: Wordpress Popular Posts is a highly customizable widget that displays the most popular posts on your blog
-Version: 3.0.1
+Version: 3.0.2
 Author: Hector Cabrera
 Author URI: http://cabrerahector.com
 Author Email: hcabrerab@gmail.com
@@ -13,7 +13,7 @@ Network: false
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Copyright 2013 Hector Cabrera (hcabrerab@gmail.com)
+Copyright 2014 Hector Cabrera (hcabrerab@gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
@@ -61,7 +61,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 * @since	1.3.0
 		 * @var		string
 		 */
-		private $version = '3.0.1';
+		private $version = '3.0.2';
 
 		/**
 		 * Plugin identifier.
@@ -289,8 +289,6 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			// Register site styles and scripts
 			if ( $this->user_settings['tools']['css'] )
 				add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_styles' ) );
-			
-			add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_scripts' ) );
 
 			// Add plugin settings link
 			add_filter( 'plugin_action_links', array( $this, 'add_plugin_settings_link' ), 10, 2 );
@@ -632,7 +630,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		function replace_thickbox_text($translated_text, $text, $domain) {
 
 			if ('Insert into Post' == $text) {
-				$referer = strpos( wp_get_referer(), $this->plugin_slug );
+				$referer = strpos( wp_get_referer(), 'wpp_admin' );
 				if ( $referer != '' ) {
 					return __('Upload', $this->plugin_slug );
 				}
@@ -648,17 +646,17 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 * @since	1.0.0
 		 */
 		public function register_widget_styles() {
-			wp_enqueue_style( $this->plugin_slug, plugins_url( 'style/wpp.css', __FILE__ ), array(), $this->version );
-		} // end register_widget_styles
+			
+			$theme_file = get_stylesheet_directory() . '/wpp.css';
+			$plugin_file = plugin_dir_path(__FILE__) . 'style/wpp.css';
 
-		/**
-		 * Registers and enqueues widget-specific scripts.
-		 *
-		 * @since	1.0.0
-		 */
-		public function register_widget_scripts() {
-			wp_enqueue_script( $this->plugin_slug .'-script', plugins_url( 'js/widget.js', __FILE__ ), array('jquery'), $this->version );
-		} // end register_widget_scripts
+			if ( @file_exists($theme_file) ) { // user stored a custom wpp.css on theme's directory, so use it
+				wp_enqueue_style( $this->plugin_slug, get_stylesheet_directory_uri() . "/wpp.css", array(), $this->version );
+			} elseif ( @file_exists($plugin_file) ) { // no custom wpp.css, use plugin's instead
+				wp_enqueue_style( $this->plugin_slug, plugins_url( 'style/wpp.css', __FILE__ ), array(), $this->version );
+			}
+			
+		} // end register_widget_styles
 
 		/**
 		 * Register the administration menu for this plugin into the WordPress Dashboard menu.
@@ -1873,12 +1871,6 @@ if ( !class_exists('WordpressPopularPosts') ) {
 
 			if ( !$instance['thumbnail']['active'] || !$this->thumbnailing ) {
 				return '';
-			}
-
-			$cache = &$this->__cache(__FUNCTION__, array());
-
-			if ( isset($cache[$p->id]) ) {
-				return $cache[$p->id];
 			}
 
 			$tbWidth = $instance['thumbnail']['width'];
