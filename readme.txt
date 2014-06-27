@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=hcabr
 Tags: popular, posts, widget, popularity, top
 Requires at least: 3.8
 Tested up to: 3.9.1
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,11 @@ Wordpress Popular Posts is a highly customizable widget that displays the most p
 * **Template tags** - Don't feel like using widgets? No problem! You can still embed your most popular entries on your theme using the *wpp_get_mostpopular()* template tag. Additionally, the *wpp_gets_views()* template tag allows you to retrieve the views count for a particular post. For usage and instructions, please refer to the [installation section](http://wordpress.org/extend/plugins/wordpress-popular-posts/installation/).
 * **Localizable** to your own language (*See the [FAQ section](http://wordpress.org/extend/plugins/wordpress-popular-posts/faq/) for more info*).
 * **[WP-PostRatings](http://wordpress.org/extend/plugins/wp-postratings/) support**. Show your visitors how your readers are rating your posts!
+
+= Notices =
+* Starting version 3.0.0, the way plugin tracks views count switched back to [AJAX](http://codex.wordpress.org/AJAX). The reason for this change is to prevent bots / spiders from inflating views count, so if you're using a caching plugin you should clear its cache after installing / upgrading the Wordpress Popular Posts plugin so it can track your posts and pages normally.
+
+**Wordpress Popular Posts** is now also on [GitHub](https://github.com/cabrerahector/wordpress-popular-posts)!
 
 == Installation ==
 
@@ -63,7 +68,7 @@ The idea of creating this plugin came from the need to know how many people were
 Since Wordpress doesn't store views count (only comments count), this plugin stores that info for you. When you sort your popular posts by *views*, Wordpress Popular Posts will retrieve the views count it started caching from the time you first installed this plugin, and then rank the top posts according to the settings you have configured in the plugin. Wordpress Popular Posts can also rank the popularity of your posts based on comments count as well.
 
 = I'm getting "Sorry. No data so far". What's up with that? =
-There are a number of reasons that might explain why you are seeing this message: no one has seen or commented on your posts/pages since Wordpress Popular Posts activation, you should give it some time; your current theme does not have the [wp_head()](http://codex.wordpress.org/Theme_Development#Plugin_API_Hooks) tag in its &lt;head&gt; section, required by my plugin to keep track of what your visitors are viewing on your site; Wordpress Popular Posts was unable to create the necessary DB tables to work, make sure your hosting has granted you permission to create / update / modify tables in the database.
+There are a number of reasons that might explain why you are seeing this message: no one has seen or commented on your posts/pages since Wordpress Popular Posts activation, you should give it some time; your current theme does not have the [wp_head()](http://codex.wordpress.org/Theme_Development#Plugin_API_Hooks) tag in its &lt;head&gt; section, required by my plugin to keep track of what your visitors are viewing on your site; Wordpress Popular Posts was unable to create the necessary DB tables to work, make sure your hosting has granted you permission to create / update / modify tables in the database; if you're using a caching plugin -such as W3 Total Cache- you need to clear its cache once right after installing/upgrading this plugin.
 
 = My current theme does not support widgets (booooo!). Can I show my most popular posts in any other way? =
 Yes, there are other choices: you can use the [wpp shortcode](https://github.com/cabrerahector/wordpress-popular-posts/wiki/1.-Using-WPP-on-posts-&-pages), which allows you to embed your popular listing directly in the content of your posts and/or pages; or you can use the [wpp_get_mostpopular() template tag](https://github.com/cabrerahector/wordpress-popular-posts/wiki/2.-Template-tags#wpp_get_mostpopular). Both options are highly customizable via parameters, check them out via *wp-admin > Settings > Wordpress Popular Posts > Parameters*.
@@ -145,6 +150,14 @@ For the time being, the [Support Forum](http://wordpress.org/support/plugin/word
 4. Wordpress Popular Posts Stats panel.
 
 == Changelog ==
+= 3.0.3 =
+* Fixes widget not saving 'freshness' setting.
+* Adds HTMLentities conversion/deconversion on wpp_get_mostpopular().
+* Improves thumbnail detection.
+* Fixes a bug affecting the truncation of excerpts.
+* Fixes yet another bug on wpp_get_views().
+* Other minor changes.
+
 = 3.0.2 =
 * Fixes an introduced bug on wpp_get_views().
 * Fixes bug where thumbnail size was cached for multiple instances.
@@ -158,6 +171,7 @@ For the time being, the [Support Forum](http://wordpress.org/support/plugin/word
 * Fixes bug that prevented disabling plugin's stylesheet.
 
 = 3.0.0 =
+* Starting from this version, the way plugin tracks views count switched back to [AJAX](http://codex.wordpress.org/AJAX) to prevent bots / spiders from inflating views count. If you're using a caching plugin you should clear its cache after installing / upgrading the Wordpress Popular Posts plugin so it can track your posts and pages normally.
 * Plugin refactoring based on [@tikaszvince](https://github.com/tikaszvince)'s work (many thanks, Vince!).
 * Added WPML support.
 * Added experimental Wordpress Multisite support.
@@ -373,5 +387,5 @@ All translations are community made: people who are nice enough to share their t
 
 == Upgrade Notice ==
 
-= 3.0.2 =
+= 3.0.3 =
 This version requires PHP 5.2+ and Wordpress 3.8 or greater. Also, backup the wpp.css file first if you modified it!
