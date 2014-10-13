@@ -3,7 +3,7 @@
 Plugin Name: WordPress Popular Posts
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-popular-posts
 Description: WordPress Popular Posts is a highly customizable widget that displays the most popular posts on your blog
-Version: 3.1.0
+Version: 3.1.1
 Author: Hector Cabrera
 Author URI: http://cabrerahector.com
 Author Email: hcabrerab@gmail.com
@@ -61,7 +61,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 * @since	1.3.0
 		 * @var		string
 		 */
-		private $version = '3.1.0';
+		private $version = '3.1.1';
 
 		/**
 		 * Plugin identifier.
@@ -326,7 +326,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			$this->default_thumbnail = $this->plugin_dir . "no_thumb.jpg";
 			$this->default_user_settings['tools']['thumbnail']['default'] = $this->default_thumbnail;
 
-			if ( !empty($this->user_settings['tools']['thumbnail']['default']) && @exif_imagetype($this->user_settings['tools']['thumbnail']['default']) )
+			if ( !empty($this->user_settings['tools']['thumbnail']['default']) )
 				$this->default_thumbnail = $this->user_settings['tools']['thumbnail']['default'];
 			else
 				$this->user_settings['tools']['thumbnail']['default'] = $this->default_thumbnail;
@@ -2449,7 +2449,13 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			$response = wp_remote_head( $url, array( 'timeout' => 5, 'sslverify' => false ) );
 
 			if ( !is_wp_error($response) && in_array(wp_remote_retrieve_response_code($response), $accepted_status_codes) ) {
-				$image_type = exif_imagetype( $url );
+				
+				if ( function_exists('exif_imagetype') ) {
+					$image_type = exif_imagetype( $url );
+				} else {
+					$image_type = getimagesize( $url );
+					$image_type = ( isset($image_type[2]) ) ? $image_type[2] : NULL;
+				}
 
 				if ( in_array($image_type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG)) ) {
 					require_once( ABSPATH . 'wp-admin/includes/file.php' );
