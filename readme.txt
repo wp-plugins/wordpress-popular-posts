@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=hcabr
 Tags: popular, posts, widget, popularity, top
 Requires at least: 3.8
 Tested up to: 4.0.1
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,6 +152,10 @@ For the time being, the [Support Forum](http://wordpress.org/support/plugin/word
 4. WordPress Popular Posts Stats panel.
 
 == Changelog ==
+= 3.2.1 =
+* Fixes missing HTML decoding for custom HTML in widget.
+* Puts LIMIT clause back to the outer query.
+
 = 3.2.0 =
 * Adds check for jQuery.
 * Fixes invalid parameter in htmlspecialchars().
