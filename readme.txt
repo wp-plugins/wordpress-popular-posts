@@ -3,8 +3,8 @@ Contributors: hcabrera
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=hcabrerab%40gmail%2ecom&lc=GB&item_name=WordPress%20Popular%20Posts%20Plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG_global%2egif%3aNonHosted
 Tags: popular, posts, widget, popularity, top
 Requires at least: 3.8
-Tested up to: 4.0.1
-Stable tag: 3.2.1
+Tested up to: 4.2
+Stable tag: 3.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,9 @@ WordPress Popular Posts is a highly customizable widget that displays the most p
 2. Upload the `wordpress-popular-posts` folder to the `/wp-content/plugins/` directory.
 3. Activate **WordPress Popular Posts** plugin through the 'Plugins' menu in WordPress.
 4. In your admin console, go to Appearance > Widgets, drag the WordPress Popular Posts widget to wherever you want it to be and click on Save.
-5. (optional) Go to Appearance > Editor. On "Theme Files", click on `header.php` and make sure that the `<?php wp_head(); ?>` tag is present (should be right before the closing `</head>` tag).
+5. If you have a caching plugin installed on your site, flush its cache now so WPP can start tracking your site.
+6. (optional) Go to Appearance > Editor. On "Theme Files", click on `header.php` and make sure that the `<?php wp_head(); ?>` tag is present (should be right before the closing `</head>` tag).
+7. (optional, but recommended for large / high traffic sites) Enabling [Data Sampling](https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#data-sampling) and/or [Caching](https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#caching) is recommended. Check [here](https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance) for more.
 
 That's it!
 
@@ -152,6 +154,22 @@ For the time being, the [Support Forum](http://wordpress.org/support/plugin/word
 4. WordPress Popular Posts Stats panel.
 
 == Changelog ==
+= 3.2.2 =
+**If you're using a caching plugin, flushing its cache after installing / upgrading to this version is recommended.**
+
+* Moves sampling logic into Javascript (thanks, [@kurtpayne](https://github.com/kurtpayne)!)
+* Simplifies category filtering logic.
+* Fixes list sorting issue that some users were experimenting (thanks, sponker!)
+* Widget uses stock thumbnails when using predefined size (some conditions apply).
+* Adds the ability to enable / disable responsive support for thumbails.
+* Renames wpp_update_views action hook to wpp_post_update_views, **update your code!**
+* Adds wpp_pre_update_views action hook.
+* Adds filter wpp_render_image.
+* Drops support for get_mostpopular() template tag.
+* Fixes empty HTML tags (thumbnail, stats).
+* Removes Japanese, French and Norwegian Bokmal translation files from plugin.
+* Many minor bug fixes / enhancements.
+
 = 3.2.1 =
 * Fixes missing HTML decoding for custom HTML in widget.
 * Puts LIMIT clause back to the outer query.
@@ -430,7 +448,7 @@ All translations are community made: people who are nice enough to share their t
 
 * English (supported by Hector Cabrera).
 * Spanish (supported by Hector Cabrera).
-* German - 87% translated.
+* German - 86% translated.
 
 == Credits ==
 
@@ -438,5 +456,5 @@ All translations are community made: people who are nice enough to share their t
 
 == Upgrade Notice ==
 
-= 3.1.0 =
-This version requires PHP 5.2+ and WordPress 3.8 or greater. Also, backup the wpp.css file first if you modified it!
+= 3.2.2 =
+If you're using a caching plugin, flushing its cache after upgrading is recommended.
